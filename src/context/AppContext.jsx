@@ -1,24 +1,24 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-// Context erstellen und exportieren
-export const AppContext = createContext();
+// 1. Context erstellen
+export const AppContext = createContext(null);
 
-// Custom Hook zum einfachen Zugriff auf den Context
+// 2. Hook für einfaches Nutzen des Contexts
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('useAppContext must be used within AppProvider');
+    throw new Error("useAppContext muss innerhalb von AppProvider genutzt werden");
   }
   return context;
 };
 
-// Provider-Komponente
+// 3. Provider-Komponente, die die Daten an deine App liefert
 export const AppProvider = ({ children }) => {
-  // Du kannst hier z.B. useState oder andere States verwalten und im Kontext bereitstellen
-  const value = {}; // z.B. { user: ..., theme: ... }
+  // Beispiel: Du kannst hier eigene States einfügen, z.B. für Theme o.ä.
+  const [state, setState] = useState({});
 
   return (
-    <AppContext.Provider value={value}>
+    <AppContext.Provider value={{ state, setState }}>
       {children}
     </AppContext.Provider>
   );
