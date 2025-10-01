@@ -1,0 +1,24 @@
+@import 'bpmn-js/dist/assets/diagram-js.css';
+@import 'bpmn-js/dist/assets/bpmn-js.css';
+@import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+
+/* Custom BPMN styles for dark mode */
+.dark .djs-palette {
+  background: rgb(31 41 55);
+  border: 1px solid rgb(75 85 99);
+}
+
+.dark .djs-palette-entries {
+  color: rgb(243 244 246);
+}
+
+.dark .djs-context-pad {
+  background: rgb(31 41 55);
+  border: 1px solid rgb(75 85 99);
+}
+
+.dark .djs-properties-panel {
+  background: rgb(31 41 55);
+  color: rgb(243 244 246);
+  border-left: 1px solid rgb(75 85 99);
+}
