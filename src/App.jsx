@@ -408,11 +408,11 @@ const App = () => {
 };
 
 // App Provider Component
-const AppProvider = ({ children }) => {
+const App = () => {
   return (
-    <AppContext.Provider value={{}}>
-      {children}
-    </AppContext.Provider>
+    <AppProvider>
+      <MainComponent />
+    </AppProvider>
   );
 };
 
