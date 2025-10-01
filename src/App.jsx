@@ -1,3 +1,17 @@
+import React from 'react';
+import { AppProvider } from './context/AppContext';
+import MainComponent from './MainComponent'; // Deine Haupt-Komponente
+
+const App = () => {
+  return (
+    <AppProvider>
+      <MainComponent />
+    </AppProvider>
+  );
+};
+
+export default App;
+
 const App = () => {
   // State management
   const [navigationData, setNavigationData] = useLocalStorage('wbg-navigation-data', INITIAL_DATA);
