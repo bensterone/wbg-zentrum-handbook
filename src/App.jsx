@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppProvider } from './context/AppContext';
-import MainComponent from './MainComponent'; // Deine Haupt-Komponente
 
 const App = () => {
   return (
@@ -9,8 +8,6 @@ const App = () => {
     </AppProvider>
   );
 };
-
-export default App;
 
 const App = () => {
   // State management
@@ -421,20 +418,12 @@ const App = () => {
   );
 };
 
-// App Provider Component
-const App = () => {
-  return (
-    <AppProvider>
-      <MainComponent />
-    </AppProvider>
-  );
-};
 
 // Export wrapped app
-const WrappedApp = () => (
+const App = () => (
   <AppProvider>
     <App />
   </AppProvider>
 );
 
-export default WrappedApp;
+export default App;
