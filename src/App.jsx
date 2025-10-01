@@ -1,68 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
+// Import des Context Providers
 import { AppProvider } from './context/AppContext';
 
-const App = () => {
-  return (
-    <AppProvider>
-      <MainComponent />
-    </AppProvider>
-  );
-};
+// Import deiner selbst geschriebener Hooks und Helferfunktionen, passe Pfade bei Bedarf an
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { useUndoRedo } from './hooks/useUndoRedo';
+import { useTheme } from './hooks/useTheme';
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 
-const App = () => {
-  // State management
+import { findItemById, generateId, buildBreadcrumb, getWordCount, useAutoSave } from './utils/helpers';
+
+import ErrorBoundary from './components/ErrorBoundary';
+import EnhancedSearch from './components/EnhancedSearch';
+import StatusBar from './components/StatusBar';
+import Sidebar from './components/Sidebar';
+import RichTextEditor from './components/RichTextEditor';
+import DocumentView from './components/DocumentView';
+import ProcessView from './components/ProcessView';
+import FolderView from './components/FolderView';
+import ContextMenu from './components/ContextMenu';
+import AddItemModal from './components/AddItemModal';
+
+import INITIAL_DATA from './data/initialData';
+
+const InnerApp = () => {
+  // States
   const [navigationData, setNavigationData] = useLocalStorage('wbg-navigation-data', INITIAL_DATA);
   const [activeId, setActiveId] = useState('organigramm');
   const [isEditing, setIsEditing] = useState(false);
   const [saveStatus, setSaveStatus] = useState('saved');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [editingData, setEditingData] = useState(null);
-  
-  // Theme
+
+  // Theme Hook
   const { theme, toggleTheme, isDark } = useTheme();
-  
-  // Undo/Redo
-  const { 
-    currentState: undoState, 
-    pushState, 
-    undo, 
-    redo, 
-    canUndo, 
-    canRedo 
+
+  // Undo/Redo Hook
+  const {
+    currentState: undoState,
+    pushState,
+    undo,
+    redo,
+    canUndo,
+    canRedo
   } = useUndoRedo(navigationData);
-  
-  // Context menu state
-  const [contextMenu, setContextMenu] = useState({ 
-    isOpen: false, 
-    position: { x: 0, y: 0 }, 
-    itemId: null 
-  });
-  
-  // Add item modal state
-  const [addItemModal, setAddItemModal] = useState({ 
-    isOpen: false, 
-    type: 'document', 
-    parentId: null 
+
+  // Context Menu state
+  const [contextMenu, setContextMenu] = useState({
+    isOpen: false,
+    position: { x: 0, y: 0 },
+    itemId: null
   });
 
-  // Get current item
+  // Add Item Modal state
+  const [addItemModal, setAddItemModal] = useState({
+    isOpen: false,
+    type: 'document',
+    parentId: null
+  });
+
+  // Current Item und Wortanzahl
   const currentItem = findItemById(activeId, navigationData);
   const wordCount = currentItem?.content ? getWordCount(currentItem.content.blocks) : 0;
 
-  // Auto-save navigation data
-  useAutoSave(navigationData, (data) => {
+  // Auto-Save Navigation Data
+  useAutoSave(navigationData, () => {
     setSaveStatus('saving');
     setTimeout(() => setSaveStatus('saved'), 500);
   }, 1000);
 
-  // Sync undo state with navigation data
+  // Sync Undo-State mit Navigation Data
   useEffect(() => {
     if (JSON.stringify(undoState) !== JSON.stringify(navigationData)) {
       setNavigationData(undoState);
     }
   }, [undoState, navigationData, setNavigationData]);
 
-  // Keyboard shortcuts
+  // Keyboard Shortcuts
   useKeyboardShortcuts({
     onSearch: () => window.focusSearch?.(),
     onSave: async () => {
@@ -80,7 +95,7 @@ const App = () => {
     isEditing
   });
 
-  // Toggle navigation item
+  // Toggle Nav Item expand/collapse
   const toggleNavItem = useCallback((itemId) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
     const item = findItemById(itemId, newData);
@@ -91,11 +106,10 @@ const App = () => {
     }
   }, [navigationData, setNavigationData, pushState]);
 
-  // Handle item move (drag & drop)
+  // Handle drag&drop move
   const handleItemMove = useCallback((draggedId, targetId) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
-    
-    // Find and remove dragged item
+
     let draggedItem = null;
     const removeFromParent = (node) => {
       if (node.children) {
@@ -110,17 +124,15 @@ const App = () => {
       }
       return false;
     };
-    
     removeFromParent(newData);
-    
-    // Add to target
+
     if (draggedItem) {
       const targetItem = findItemById(targetId, newData);
       if (targetItem && (targetItem.type === 'folder' || targetItem.type === 'root')) {
         if (!targetItem.children) targetItem.children = [];
         targetItem.children.push(draggedItem);
         targetItem.expanded = true;
-        
+
         setNavigationData(newData);
         pushState(newData);
       }
@@ -157,8 +169,7 @@ const App = () => {
             id: generateId(),
             label: `${itemToDuplicate.label} (Kopie)`
           };
-          
-          // Find parent and add duplicate
+
           const newData = JSON.parse(JSON.stringify(navigationData));
           const addToParent = (node) => {
             if (node.children) {
@@ -173,8 +184,8 @@ const App = () => {
             }
             return false;
           };
-          
           addToParent(newData);
+
           setNavigationData(newData);
           pushState(newData);
         }
@@ -183,9 +194,9 @@ const App = () => {
         const exportItem = findItemById(itemId, navigationData);
         if (exportItem) {
           const dataStr = JSON.stringify(exportItem, null, 2);
-          const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+          const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
           const exportFileDefaultName = `${exportItem.label}.json`;
-          
+
           const linkElement = document.createElement('a');
           linkElement.setAttribute('href', dataUri);
           linkElement.setAttribute('download', exportFileDefaultName);
@@ -193,7 +204,7 @@ const App = () => {
         }
         break;
       case 'delete':
-        if (confirm('Sind Sie sicher, dass Sie dieses Element löschen möchten?')) {
+        if (window.confirm('Sind Sie sicher, dass Sie dieses Element löschen möchten?')) {
           const newData = JSON.parse(JSON.stringify(navigationData));
           const removeFromParent = (node) => {
             if (node.children) {
@@ -208,27 +219,29 @@ const App = () => {
             }
             return false;
           };
-          
           removeFromParent(newData);
+
           setNavigationData(newData);
           pushState(newData);
-          
+
           if (activeId === itemId) {
             setActiveId('organigramm');
           }
         }
         break;
+      default:
+        break;
     }
   }, [activeId, navigationData, setNavigationData, pushState]);
 
-  // Add new item
+  // Add new item handler
   const handleAddItem = useCallback(({ name, description, icon, type, tags }) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
     const parent = findItemById(addItemModal.parentId, newData);
-    
+
     if (parent) {
       if (!parent.children) parent.children = [];
-      
+
       const newItem = {
         id: generateId(),
         label: name,
@@ -236,9 +249,9 @@ const App = () => {
         type: type,
         expanded: false,
         description: description || undefined,
-        tags: tags && tags.length > 0 ? tags : undefined
+        tags: tags && tags.length > 0 ? tags : undefined,
       };
-      
+
       if (type === 'document') {
         newItem.content = {
           blocks: [
@@ -249,21 +262,20 @@ const App = () => {
       } else if (type === 'folder') {
         newItem.children = [];
       } else if (type === 'process') {
-        // Process-specific initialization
+        // Initialisierung process-spezifisch
       }
-      
+
       parent.children.push(newItem);
       parent.expanded = true;
-      
+
       setNavigationData(newData);
       pushState(newData);
-      
-      // Navigate to new item
+
       setActiveId(newItem.id);
     }
   }, [addItemModal.parentId, navigationData, setNavigationData, pushState]);
 
-  // Save document
+  // Save document handler
   const handleSaveDocument = useCallback((content) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
     const item = findItemById(activeId, newData);
@@ -276,16 +288,16 @@ const App = () => {
     setEditingData(null);
   }, [activeId, navigationData, setNavigationData, pushState]);
 
-  // Handle context menu position
+  // Context menu position handler
   const handleContextMenu = useCallback((itemId, event) => {
     const rect = event?.target?.getBoundingClientRect();
-    setContextMenu({ 
-      isOpen: true, 
-      position: { 
-        x: rect?.right || event?.clientX || 0, 
-        y: rect?.top || event?.clientY || 0 
-      }, 
-      itemId 
+    setContextMenu({
+      isOpen: true,
+      position: {
+        x: rect?.right || event?.clientX || 0,
+        y: rect?.top || event?.clientY || 0,
+      },
+      itemId
     });
   }, []);
 
@@ -302,12 +314,12 @@ const App = () => {
                 v2.0
               </span>
             </div>
-            
-            <EnhancedSearch 
-              data={navigationData} 
-              onSelect={setActiveId} 
+
+            <EnhancedSearch
+              data={navigationData}
+              onSelect={setActiveId}
             />
-            
+
             <div className="flex items-center gap-3">
               <button
                 onClick={toggleTheme}
@@ -316,7 +328,7 @@ const App = () => {
               >
                 {isDark ? '🌞' : '🌙'}
               </button>
-              
+
               <StatusBar
                 saveStatus={saveStatus}
                 canUndo={canUndo}
@@ -378,12 +390,12 @@ const App = () => {
                         isDarkMode={isDark}
                       />
                     ) : currentItem.type === 'process' ? (
-                      <ProcessView 
-                        item={currentItem} 
+                      <ProcessView
+                        item={currentItem}
                         isDarkMode={isDark}
                       />
                     ) : (currentItem.type === 'folder' || currentItem.type === 'root') ? (
-                      <FolderView 
+                      <FolderView
                         item={currentItem}
                         onSelect={setActiveId}
                         isDarkMode={isDark}
@@ -418,11 +430,10 @@ const App = () => {
   );
 };
 
-
-// Export wrapped app
+// Haupt-App-Export wrapped mit Context-Provider!
 const App = () => (
   <AppProvider>
-    <App />
+    <InnerApp />
   </AppProvider>
 );
 
