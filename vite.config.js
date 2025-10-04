@@ -4,11 +4,6 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: './',
   plugins: [react()],
-  optimizeDeps: {
-    include: ['bpmn-js/lib/Modeler', 'bpmn-js/lib/Viewer']
-  },
-  define: {
-    global: 'globalThis'
-  }
+  define: { global: 'globalThis' },
+  server: { port: 3000 },
 });
-
