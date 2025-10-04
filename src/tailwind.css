@@ -2,5 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional custom overrides */
-
+html, body, #root { height: 100%; }
+.prose img { max-width: 100%; height: auto; }
