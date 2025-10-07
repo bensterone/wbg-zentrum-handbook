@@ -83,3 +83,4 @@ const EnhancedSearch = memo(({ data, onSelect }) => {
     // Placeholder return, replace with your actual component JSX
     return null;
   });
+export default EnhancedSearch;
