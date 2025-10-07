@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback, useEffect } from 'react';
-import { useSearch } from './hooks/useSearch';
+import { useSearch } from '../hooks/useSearch';
 
 // Enhanced Search Results Component
 const SearchResults = memo(({ results, onSelect, onClose, query }) => {
