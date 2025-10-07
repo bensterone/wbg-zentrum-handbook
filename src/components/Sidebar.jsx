@@ -22,4 +22,3 @@ export default function Sidebar({ items = [], activeId, onSelect }) {
     </nav>
   );
 }
-export default Sidebar;
