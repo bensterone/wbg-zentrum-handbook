@@ -1,3 +1,6 @@
+import { useLocalStorage } from './useLocalStorage';
+import { useEffect } from 'react';
+
 // Theme hook
 const useTheme = () => {
   const [theme, setTheme] = useLocalStorage('wbg-theme', 'light');
