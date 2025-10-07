@@ -1,5 +1,4 @@
-import React, { memo } from 'react';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 
 // Enhanced Folder View Component
 const FolderView = memo(({ item, onSelect, isDarkMode }) => {
