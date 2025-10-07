@@ -235,7 +235,7 @@ const InnerApp = () => {
   // Add new item handler
   const handleAddItem = useCallback(({ name, description, icon, type, tags }) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
-    const parent = findItemById(EnhancedaddItemModal.parentId, newData);
+    const parent = findItemById(EnhancedAddItemModal.parentId, newData);
 
     if (parent) {
       if (!parent.children) parent.children = [];
