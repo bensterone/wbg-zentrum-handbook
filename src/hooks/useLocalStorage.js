@@ -1,4 +1,5 @@
-// LocalStorage persistence hook
+import { useState, useCallback } from 'react';
+
 const useLocalStorage = (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
@@ -22,3 +23,4 @@ const useLocalStorage = (key, initialValue) => {
   return [storedValue, setValue];
 };
 
+export { useLocalStorage };
