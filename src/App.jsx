@@ -87,7 +87,7 @@ const InnerApp = () => {
     onRedo: redo,
     onNewDocument: () => {
       const parentId = currentItem?.type === 'folder' ? currentItem.id : 'unternehmen';
-      setEnhancedAddItemModal({ isOpen: true, type: 'document', parentId });
+      setAddItemModal({ isOpen: true, type: 'document', parentId });
     },
     onToggleTheme: toggleTheme,
     isEditing
@@ -141,13 +141,13 @@ const InnerApp = () => {
   const handleContextAction = useCallback((action, itemId) => {
     switch (action) {
       case 'add-document':
-        setEnhancedAddItemModal({ isOpen: true, type: 'document', parentId: itemId });
+        setAddItemModal({ isOpen: true, type: 'document', parentId: itemId });
         break;
       case 'add-process':
-        setEnhancedAddItemModal({ isOpen: true, type: 'process', parentId: itemId });
+        setAddItemModal({ isOpen: true, type: 'process', parentId: itemId });
         break;
       case 'add-folder':
-        setEnhancedAddItemModal({ isOpen: true, type: 'folder', parentId: itemId });
+        setAddItemModal({ isOpen: true, type: 'folder', parentId: itemId });
         break;
       case 'edit':
         setActiveId(itemId);
@@ -235,7 +235,7 @@ const InnerApp = () => {
   // Add new item handler
   const handleAddItem = useCallback(({ name, description, icon, type, tags }) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
-    const parent = findItemById(EnhancedAddItemModal.parentId, newData);
+    const parent = findItemById(AddItemModal.parentId, newData);
 
     if (parent) {
       if (!parent.children) parent.children = [];
@@ -415,10 +415,10 @@ const InnerApp = () => {
           />
 
           {/* Add Item Modal */}
-          <EnhancedAddItemModal
-            isOpen={EnhancedaddItemModal.isOpen}
-            type={EnhancedaddItemModal.type}
-            onClose={() => setEnhancedAddItemModal({ ...EnhancedaddItemModal, isOpen: false })}
+          <AddItemModal
+            isOpen={addItemModal.isOpen}
+            type={addItemModal.type}
+            onClose={() => setAddItemModal({ ...addItemModal, isOpen: false })}
             onAdd={handleAddItem}
             isDarkMode={isDark}
           />
