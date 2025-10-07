@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 // Status Bar Component
 const StatusBar = memo(({ 
