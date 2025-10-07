@@ -49,4 +49,4 @@ const useKeyboardShortcuts = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [onSearch, onSave, onUndo, onRedo, onNewDocument, onToggleTheme, isEditing]);
 };
-
+export { useKeyboardShortcuts };
