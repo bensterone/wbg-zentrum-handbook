@@ -1,3 +1,5 @@
+import React, { memo } from 'react';
+
 // Content Renderer Component (Enhanced)
 const ContentRenderer = memo(({ content }) => {
   if (!content || !content.blocks) {
