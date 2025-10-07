@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 // Enhanced search hook
 const useSearch = (data, searchFields = ['label', 'description']) => {
   const [query, setQuery] = useState('');
