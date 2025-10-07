@@ -72,3 +72,4 @@ const StatusBar = memo(({
     </div>
   );
 });
+export default StatusBar;
