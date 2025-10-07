@@ -1,3 +1,5 @@
+import React, { memo } from 'react';
+
 // Enhanced Search Results Component
 const SearchResults = memo(({ results, onSelect, onClose, query }) => {
   const highlightText = (text, query) => {
