@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
 const CustomEmojiPicker = ({ onEmojiClick, isDarkMode, trigger, className = '' }) => {
