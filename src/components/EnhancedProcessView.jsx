@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import BpmnEditor from './BpmnEditor';
 
 const EnhancedProcessView = ({ item, onUpdate, isDarkMode }) => {
