@@ -87,7 +87,7 @@ const InnerApp = () => {
     onRedo: redo,
     onNewDocument: () => {
       const parentId = currentItem?.type === 'folder' ? currentItem.id : 'unternehmen';
-      setAddItemModal({ isOpen: true, type: 'document', parentId });
+      setEnhancedAddItemModal({ isOpen: true, type: 'document', parentId });
     },
     onToggleTheme: toggleTheme,
     isEditing
