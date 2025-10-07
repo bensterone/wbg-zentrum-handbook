@@ -115,3 +115,4 @@ const ContentRenderer = memo(({ content }) => {
     </div>
   );
 });
+export default ContentRenderer;
