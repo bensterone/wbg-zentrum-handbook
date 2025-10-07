@@ -18,7 +18,7 @@ import Sidebar from './components/Sidebar';
 import RichTextEditor from './components/RichTextEditor';
 import DocumentView from './components/DocumentView';
 import EnhancedProcessView from './components/EnhancedProcessView';
-import EnhancedAddItemModal from './components/EnhancedAddItemModal';
+import AddItemModal from './components/AddItemModal';
 
 import INITIAL_DATA from './data/initialData';
 
@@ -52,7 +52,7 @@ const InnerApp = () => {
   });
 
   // Add Item Modal state
-  const [EnhancedAddItemModal, setEnhancedAddItemModal] = useState({
+  const [AddItemModal, AddItemModal] = useState({
     isOpen: false,
     type: 'document',
     parentId: null
