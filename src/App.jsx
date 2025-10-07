@@ -52,7 +52,7 @@ const InnerApp = () => {
   });
 
   // Add Item Modal state
-  const [EnhancedaddItemModal, setEnhancedAddItemModal] = useState({
+  const [EnhancedAddItemModal, setEnhancedAddItemModal] = useState({
     isOpen: false,
     type: 'document',
     parentId: null
