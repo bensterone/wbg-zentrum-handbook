@@ -20,3 +20,4 @@ export default function DocumentView({ item, onUpdate }) {
     </article>
   );
 }
+export default DocumentView;
