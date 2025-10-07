@@ -52,7 +52,7 @@ const InnerApp = () => {
   });
 
   // Add Item Modal state
-  const [AddItemModal, setAddItemModal] = useState({
+  const [addItemModal, setAddItemModal] = useState({
     isOpen: false,
     type: 'document',
     parentId: null
@@ -235,7 +235,7 @@ const InnerApp = () => {
   // Add new item handler
   const handleAddItem = useCallback(({ name, description, icon, type, tags }) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
-    const parent = findItemById(AddItemModal.parentId, newData);
+    const parent = findItemById(addItemModal.parentId, newData);
 
     if (parent) {
       if (!parent.children) parent.children = [];
