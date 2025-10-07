@@ -66,4 +66,4 @@ const FolderView = memo(({ item, onSelect, isDarkMode }) => {
     </div>
   );
 });
-
+export default Folderview;
