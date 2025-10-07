@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import CustomEmojiPicker from './EmojiPicker';
 
 const EnhancedAddItemModal = ({ isOpen, type, onClose, onAdd, isDarkMode }) => {
