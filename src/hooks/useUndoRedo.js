@@ -34,3 +34,4 @@ const useUndoRedo = (initialState, maxHistory = 50) => {
     canRedo: currentIndex < states.length - 1
   };
 };
+export { useUndoRedo };
