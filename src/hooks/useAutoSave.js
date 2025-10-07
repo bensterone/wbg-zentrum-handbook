@@ -18,4 +18,4 @@ const useAutoSave = (data, onSave, delay = 2000) => {
     };
   }, [data, onSave, delay]);
 };
-
+export { useAutosave };
