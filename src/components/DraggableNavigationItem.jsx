@@ -156,3 +156,4 @@ const DraggableNavigationItem = memo(({
     </div>
   );
 });
+export default DraggableNavigationItem;
