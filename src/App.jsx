@@ -17,7 +17,7 @@ import StatusBar from './components/StatusBar';
 import Sidebar from './components/Sidebar';
 import RichTextEditor from './components/RichTextEditor';
 import DocumentView from './components/DocumentView';
-import ProcessView from './components/ProcessView';
+import ProcessView from './components/EnhancedProcessView';
 import FolderView from './components/FolderView';
 import ContextMenu from './components/ContextMenu';
 import AddItemModal from './components/AddItemModal';
