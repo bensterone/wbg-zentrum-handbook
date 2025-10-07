@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 // Undo/Redo functionality hook
 const useUndoRedo = (initialState, maxHistory = 50) => {
   const [states, setStates] = useState([initialState]);
