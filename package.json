@@ -13,14 +13,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "bpmn-js": "^17.7.1",
-    "emoji-picker-react": "^4.13.2"
+    "emoji-picker-react": "^4.13.2",
     "@editorjs/editorjs": "^2.27.0",
     "@editorjs/header": "^2.8.1",
     "@editorjs/list": "^1.9.0",
     "@editorjs/embed": "^2.7.0",
     "@editorjs/image": "^2.8.1",
     "lodash.debounce": "^4.0.8"
-
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
@@ -33,5 +32,8 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "prettier": "^2.8.8"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
