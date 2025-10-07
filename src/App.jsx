@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback, useEffect, useRef } from 'react';
+import React, { memo, useState, useCallback, useEffect, useRef, useMemo } from 'react';
 
 // Import des Context Providers
 import { AppProvider } from './context/AppContext';
