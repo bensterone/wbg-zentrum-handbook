@@ -9,6 +9,7 @@ import { useUndoRedo } from './hooks/useUndoRedo';
 import { useTheme } from './hooks/useTheme';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useSearch } from './hooks/useSearch';
+import { useAutoSave } from './hooks/useAutosave';
 
 import { findItemById, generateId, buildBreadcrumb, getWordCount, useAutoSave } from './utils/helpers';
 
