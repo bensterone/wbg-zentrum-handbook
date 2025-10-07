@@ -1,4 +1,6 @@
 import React, { memo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+
 
 // Content Renderer Component (Enhanced)
 const ContentRenderer = memo(({ content }) => {
