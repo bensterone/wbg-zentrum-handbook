@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 // Keyboard shortcuts hook
 const useKeyboardShortcuts = ({ 
   onSearch, 
