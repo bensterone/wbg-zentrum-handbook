@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import CustomEmojiPicker from './EmojiPicker';
 
-const EnhancedAddItemModal = ({ isOpen, type, onClose, onAdd, isDarkMode }) => {
+const AddItemModal = ({ isOpen, type, onClose, onAdd, isDarkMode }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [icon, setIcon] = useState(() => {
@@ -147,4 +147,4 @@ const EnhancedAddItemModal = ({ isOpen, type, onClose, onAdd, isDarkMode }) => {
   );
 };
 
-export default EnhancedAddItemModal;
+export default AddItemModal;
