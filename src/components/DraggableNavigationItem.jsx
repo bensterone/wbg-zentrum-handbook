@@ -1,3 +1,5 @@
+import React, { memo } from 'react';
+
 // Draggable Navigation Item Component
 const DraggableNavigationItem = memo(({ 
   item, 
