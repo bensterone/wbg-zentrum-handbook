@@ -1,3 +1,5 @@
+import React, { memo } from 'react';
+
 // Status Bar Component
 const StatusBar = memo(({ 
   saveStatus, 
