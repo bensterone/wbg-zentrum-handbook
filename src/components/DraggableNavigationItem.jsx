@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 // Draggable Navigation Item Component
 const DraggableNavigationItem = memo(({ 
