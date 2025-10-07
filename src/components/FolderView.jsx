@@ -1,3 +1,5 @@
+import React, { memo } from 'react';
+
 // Enhanced Folder View Component
 const FolderView = memo(({ item, onSelect, isDarkMode }) => {
   return (
