@@ -30,3 +30,4 @@ const useSearch = (data, searchFields = ['label', 'description']) => {
   
   return { query, setQuery, results, hasResults: results.length > 0 };
 };
+export { useSearch };
