@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 // Auto-save hook
 const useAutoSave = (data, onSave, delay = 2000) => {
   const timeoutRef = useRef();
