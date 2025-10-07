@@ -11,6 +11,7 @@ import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 
 import { findItemById, generateId, buildBreadcrumb, getWordCount, useAutoSave } from './utils/helpers';
 
+import ContextMenu from './components/ContextMenu';
 import ErrorBoundary from './components/ErrorBoundary';
 import EnhancedSearch from './components/EnhancedSearch';
 import StatusBar from './components/StatusBar';
