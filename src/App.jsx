@@ -302,6 +302,23 @@ const InnerApp = () => {
     });
   }, []);
 
+  // Handler zum Toggle im Nav-Tree (Ordner auf/zu)
+const toggleNavItem = useCallback((itemId) => {
+  const newData = JSON.parse(JSON.stringify(navigationData));
+  const item = findItemById(itemId, newData);
+  if (item) {
+    item.expanded = !item.expanded;
+    setNavigationData(newData);
+    pushState(newData);
+  }
+}, [navigationData, setNavigationData, pushState]);
+
+// Handler um AddItemModal zu öffnen (für neues Dokument, Ordner oder Prozess)
+const handleAddItem = useCallback((parentId, type) => {
+  setAddItemModal({ isOpen: true, type, parentId });
+}, []);
+
+
   return (
     <ErrorBoundary>
       <div className={`h-screen flex flex-col ${isDark ? 'dark' : ''}`}>
@@ -350,7 +367,9 @@ const InnerApp = () => {
   activeId={activeId}
   onSelect={setActiveId}
   onToggle={toggleNavItem}
+  onAddItem={handleAddItem}
 />
+
 
 
             {/* Main Content */}
