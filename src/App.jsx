@@ -3,7 +3,7 @@ import React, { memo, useState, useCallback, useEffect, useRef, useMemo } from '
 // Import des Context Providers
 import { AppProvider } from './context/AppContext';
 
-// Import deiner selbst geschriebener Hooks und Helferfunktionen, passe Pfade bei Bedarf an
+// Import deiner Hooks und Helfer
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useUndoRedo } from './hooks/useUndoRedo';
 import { useTheme } from './hooks/useTheme';
@@ -96,7 +96,7 @@ const InnerApp = () => {
     isEditing
   });
 
-  // Toggle Nav Item expand/collapse
+  // Toggle Nav Item expand/collapse - nur EINMALig definiert hier
   const toggleNavItem = useCallback((itemId) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
     const item = findItemById(itemId, newData);
@@ -235,8 +235,13 @@ const InnerApp = () => {
     }
   }, [activeId, navigationData, setNavigationData, pushState]);
 
-  // Add new item handler
-  const handleAddItem = useCallback(({ name, description, icon, type, tags }) => {
+  // Add new item modal open handler (nur EINE Funktion!)
+  const handleAddItem = useCallback((parentId, type) => {
+    setAddItemModal({ isOpen: true, type, parentId });
+  }, []);
+
+  // Handle modal add submit
+  const handleSubmitAddItem = useCallback(({ name, description, icon, type, tags }) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
     const parent = findItemById(addItemModal.parentId, newData);
 
@@ -258,12 +263,10 @@ const InnerApp = () => {
           blocks: [
             { type: 'header', data: { text: name, level: 1 } },
             { type: 'paragraph', data: { text: description || 'Hier können Sie Ihren Inhalt eingeben...' } }
-          ]
+          ],
         };
       } else if (type === 'folder') {
         newItem.children = [];
-      } else if (type === 'process') {
-        // Initialisierung process-spezifisch
       }
 
       parent.children.push(newItem);
@@ -274,9 +277,11 @@ const InnerApp = () => {
 
       setActiveId(newItem.id);
     }
-  }, [addItemModal.parentId, navigationData, setNavigationData, pushState]);
 
-  // Save document handler
+    setAddItemModal({ ...addItemModal, isOpen: false });
+  }, [addItemModal.parentId, addItemModal, navigationData, pushState, setNavigationData]);
+
+  // Save document
   const handleSaveDocument = useCallback((content) => {
     const newData = JSON.parse(JSON.stringify(navigationData));
     const item = findItemById(activeId, newData);
@@ -298,26 +303,9 @@ const InnerApp = () => {
         x: rect?.right || event?.clientX || 0,
         y: rect?.top || event?.clientY || 0,
       },
-      itemId
+      itemId,
     });
   }, []);
-
-  // Handler zum Toggle im Nav-Tree (Ordner auf/zu)
-const toggleNavItem = useCallback((itemId) => {
-  const newData = JSON.parse(JSON.stringify(navigationData));
-  const item = findItemById(itemId, newData);
-  if (item) {
-    item.expanded = !item.expanded;
-    setNavigationData(newData);
-    pushState(newData);
-  }
-}, [navigationData, setNavigationData, pushState]);
-
-// Handler um AddItemModal zu öffnen (für neues Dokument, Ordner oder Prozess)
-const handleAddItem = useCallback((parentId, type) => {
-  setAddItemModal({ isOpen: true, type, parentId });
-}, []);
-
 
   return (
     <ErrorBoundary>
@@ -333,10 +321,7 @@ const handleAddItem = useCallback((parentId, type) => {
               </span>
             </div>
 
-            <EnhancedSearch
-              data={navigationData}
-              onSelect={setActiveId}
-            />
+            <EnhancedSearch data={navigationData} onSelect={setActiveId} />
 
             <div className="flex items-center gap-3">
               <button
@@ -362,15 +347,13 @@ const handleAddItem = useCallback((parentId, type) => {
 
           {/* Main Layout */}
           <div className="flex flex-1 overflow-hidden">
-<Sidebar
-  navigationData={navigationData}
-  activeId={activeId}
-  onSelect={setActiveId}
-  onToggle={toggleNavItem}
-  onAddItem={handleAddItem}
-/>
-
-
+            <Sidebar
+              navigationData={navigationData}
+              activeId={activeId}
+              onSelect={setActiveId}
+              onToggle={toggleNavItem}
+              onAddItem={handleAddItem}
+            />
 
             {/* Main Content */}
             <main className="flex-1 overflow-hidden flex flex-col">
@@ -406,16 +389,9 @@ const handleAddItem = useCallback((parentId, type) => {
                         isDarkMode={isDark}
                       />
                     ) : currentItem.type === 'process' ? (
-                      <EnhancedProcessView
-                        item={currentItem}
-                        isDarkMode={isDark}
-                      />
+                      <EnhancedProcessView item={currentItem} isDarkMode={isDark} />
                     ) : (currentItem.type === 'folder' || currentItem.type === 'root') ? (
-                      <FolderView
-                        item={currentItem}
-                        onSelect={setActiveId}
-                        isDarkMode={isDark}
-                      />
+                      <FolderView item={currentItem} onSelect={setActiveId} isDarkMode={isDark} />
                     ) : null}
                   </>
                 )}
@@ -437,7 +413,7 @@ const handleAddItem = useCallback((parentId, type) => {
             isOpen={addItemModal.isOpen}
             type={addItemModal.type}
             onClose={() => setAddItemModal({ ...addItemModal, isOpen: false })}
-            onAdd={handleAddItem}
+            onAdd={handleSubmitAddItem}
             isDarkMode={isDark}
           />
         </div>
