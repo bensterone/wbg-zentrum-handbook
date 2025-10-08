@@ -22,7 +22,7 @@ import DocumentView from './components/DocumentView';
 import EnhancedProcessView from './components/EnhancedProcessView';
 import AddItemModal from './components/AddItemModal';
 
-import INITIAL_DATA from './data/initialData';
+import { INITIAL_DATA } from './data/initialData';
 
 const InnerApp = () => {
   // States
