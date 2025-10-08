@@ -344,17 +344,13 @@ const InnerApp = () => {
 
           {/* Main Layout */}
           <div className="flex flex-1 overflow-hidden">
-            <Sidebar
-              navigationData={navigationData}
-              activeId={activeId}
-              onSelect={setActiveId}
-              onToggle={toggleNavItem}
-              onAction={handleContextMenu}
-              onMove={handleItemMove}
-              isDarkMode={isDark}
-              isCollapsed={isCollapsed}
-              onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
-            />
+<Sidebar
+  navigationData={navigationData}
+  activeId={activeId}
+  onSelect={setActiveId}
+  onToggle={toggleNavItem}
+/>
+
 
             {/* Main Content */}
             <main className="flex-1 overflow-hidden flex flex-col">
