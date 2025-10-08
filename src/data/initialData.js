@@ -470,4 +470,4 @@ const INITIAL_DATA = {
     }
   ]
 };
-export default INITIAL_DATA;
+export { INITIAL_DATA };
