@@ -21,6 +21,7 @@ import RichTextEditor from './components/RichTextEditor';
 import DocumentView from './components/DocumentView';
 import EnhancedProcessView from './components/EnhancedProcessView';
 import AddItemModal from './components/AddItemModal';
+import FolderView from './components/FolderView';
 
 import { INITIAL_DATA } from './data/initialData';
 
