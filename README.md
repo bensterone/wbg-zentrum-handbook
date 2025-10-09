@@ -43,7 +43,6 @@ Live Demo:
 https://wbg-zentrum-handbook.vercel.app/
 Struktur
 
-text
 src/
   components/      // UI-Bausteine (Sidebar, Editor, Modale etc.)
   context/         // AppContext für globale Werte
@@ -56,6 +55,7 @@ public/
   bpmn-fonts/      // BPMN-Schriftarten (wenn benötigt)
 README.md
 package.json
+
 
 Konfiguration
 
